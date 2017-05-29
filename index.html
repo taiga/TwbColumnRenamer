@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Tableau Workbook Column Renamer</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Tableau Workbook Column Renamer</h1>
+    <div class="row">
+      <button class="btn btn-primary col-md-3" data-js="selectButton">Select .twb file</button>
+      <input type="file" data-js="twbLoader" value="Select .twb file." style="display: none">
+    </div>
+    <div class="row" style="height: 300px; padding: 10px 0;">
+      <textarea class="col-xs-6 col-md-6" style="height: 100%" data-js="textareaBefore" disabled="disabled"></textarea>
+      <textarea class="col-xs-6 col-md-6" style="height: 100%" data-js="textareaAfter"></textarea>
+    </div>
+    <div class="row">
+      <button class="btn btn-danger col-md-3" data-js="saveButton" disabled="disabled">Replace &amp; Export .twb</button>
+    </div>
+  </div>
+  <script src="dist/common.js"></script>
+  <script src="dist/main.js"></script>
+</body>
+</html>
