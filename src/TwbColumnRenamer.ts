@@ -8,6 +8,21 @@ export class TwbColumnRenamer {
 
   public currentXml: XMLDocument;
 
+  private getRefChild(element: Element): Node {
+    const candidateTags = ['column', 'aliases', 'connection'];
+    let resultElement: Node;
+    candidateTags.forEach((tagName: string) => {
+      if (resultElement) {
+        return;
+      }
+      const tmpElements = this.getChildNodesByTagName(element, tagName);
+      if (tmpElements.length > 0) {
+        resultElement =  ( tmpElements[tmpElements.length - 1] ).nextElementSibling;
+      }
+    });
+    return resultElement;
+  }
+
   public replaceColumnNames(source: string) {
     if (this.metadataRecords) {
       const replaceNames: string[] = source.split('\n');
@@ -29,7 +44,7 @@ export class TwbColumnRenamer {
           matchColumn.setAttribute('caption', replaceName);
         } else {
           const dataType = metadataRecord.getElementsByTagName('local-type').item(0).textContent;
-          const refChild = this.currentDataSource.getElementsByTagName('column-instance').item(0);
+          const refChild = this.getRefChild(this.currentDataSource);
           // NOTE: document.createElement だと xmlns 属性が付与され Tableau Desktop でパースエラーが出るため
           const newColumnElement = document.createElementNS(null, 'column');
           newColumnElement.setAttribute('caption', replaceName);
@@ -38,8 +53,11 @@ export class TwbColumnRenamer {
           newColumnElement.setAttribute('role', 'dimension');
           // NOTE: datatype が string のときは 'nominal' それ以外は 'ordinal' で ( 仕様的に本当に正しいかは謎 )
           newColumnElement.setAttribute('type', dataType === 'string' ? 'nominal' : 'ordinal');
-          // NOTE: <column-instance> より手前に貼り付けないと Tableau Desktop でパースエラーが出るため
-          this.currentDataSource.insertBefore(newColumnElement, refChild);
+          if (refChild) {
+            this.currentDataSource.insertBefore(newColumnElement, refChild);
+          } else {
+            this.currentDataSource.appendChild(newColumnElement);
+          }
         }
       });
     }
