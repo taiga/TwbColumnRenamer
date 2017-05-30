@@ -11,7 +11,7 @@ https://taiga.github.io/tableau/TwbColumnRenamer/
 - 右側のテキストエリアに置換文字列を入力する
   - 改行区切り
   - 空白行のカラムはスキップ
-- `[Replace &amp; Export .twb]` ボタンを押すと、任意の文字列に置換された `≪元のファイル名≫_replace.twb` が出力される
+- `[Replace & Export .twb]` ボタンを押すと、任意の文字列に置換された `≪元のファイル名≫_replace.twb` が出力される
 - 書き出された .twb ファイルを Tableau Desktop で開き上書き保存する
 
 ## 注意事項
@@ -25,7 +25,7 @@ https://taiga.github.io/tableau/TwbColumnRenamer/
 - Google Chrome
 - Tableau Desktop 10.2 ( 多少のバージョン違いは問題ないと思いますが… )
 
-## QA
+## Q & A
 - Q: 書き出した .twb ファイルが開けない
   - A: 不具合です。動作環境と、置換元となる .twb を添えて issue にてお知らせください 
 
