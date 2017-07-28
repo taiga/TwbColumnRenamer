@@ -29,11 +29,12 @@ export class TwbColumnRenamer {
       let replaceNamesCounter: number = 0;
       this.metadataRecordsList.forEach((metadataRecords: Element[], index: number) => {
         metadataRecords.forEach((metadataRecord: Element) => {
-          if (!replaceNames[replaceNamesCounter++]) {
+          if (!replaceNames[replaceNamesCounter]) {
+            replaceNamesCounter++;
             return;
           }
           const localName: string = metadataRecord.getElementsByTagName('local-name').item(0).textContent;
-          const replaceName: string = replaceNames[replaceNamesCounter++];
+          const replaceName: string = replaceNames[replaceNamesCounter];
           let matchColumn: Element;
           // NOTE : localName とマッチする column の有無をチェックして入力項目に置換 ( caption 属性を付与 )
           // カラムが見つからなかった場合は column を生成して追加する
@@ -62,6 +63,7 @@ export class TwbColumnRenamer {
               targetDataSources.appendChild(newColumnElement);
             }
           }
+          replaceNamesCounter++;
         });
       });
     }
