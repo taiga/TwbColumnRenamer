@@ -54,9 +54,11 @@ export class TwbColumnRenamer {
             newColumnElement.setAttribute('caption', replaceName);
             newColumnElement.setAttribute('datatype', dataType);
             newColumnElement.setAttribute('name', localName);
-            newColumnElement.setAttribute('role', 'dimension');
+            const isStringDataType = dataType === 'string';
+            // NOTE: datatype が string のときは 'dimension' それ以外は 'measure' で ( 仕様的に本当に正しいかは謎 )
+            newColumnElement.setAttribute('role', isStringDataType ? 'dimension' : 'measure');
             // NOTE: datatype が string のときは 'nominal' それ以外は 'ordinal' で ( 仕様的に本当に正しいかは謎 )
-            newColumnElement.setAttribute('type', dataType === 'string' ? 'nominal' : 'ordinal');
+            newColumnElement.setAttribute('type', isStringDataType ? 'nominal' : 'ordinal');
             if (refChild) {
               targetDataSources.insertBefore(newColumnElement, refChild);
             } else {
